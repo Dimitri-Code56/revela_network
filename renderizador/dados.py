@@ -158,8 +158,9 @@ def _recortar(lin, alvos, r):
     _, h, w = lin.shape
     if h < r or w < r:
         s = r / min(h, w)
-        lin = F.interpolate(lin[None], scale_factor=s, mode="bilinear")[0]
-        alvos = {k: F.interpolate(v[None], size=lin.shape[1:], mode="bilinear")[0] for k, v in alvos.items()}
+        tam = (max(r, math.ceil(h * s)), max(r, math.ceil(w * s)))   # tamanho explícito: o arredondamento não pode deixar um lado menor que r
+        lin = F.interpolate(lin[None], size=tam, mode="bilinear")[0]
+        alvos = {k: F.interpolate(v[None], size=tam, mode="bilinear")[0] for k, v in alvos.items()}
         _, h, w = lin.shape
     y, x = random.randint(0, h - r), random.randint(0, w - r)
     flip = random.random() < 0.5

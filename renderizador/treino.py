@@ -156,7 +156,7 @@ def main(argv=None):
     ap.add_argument("--etapa", default="tudo", choices=["cena", "base", "lora", "tudo"])
     ap.add_argument("--estilo-base", default="c"); ap.add_argument("--estilos", default="a,b,d,e")
     ap.add_argument("--iters", type=int, default=20000); ap.add_argument("--iters-lora", type=int)
-    ap.add_argument("--batch", type=int, default=8); ap.add_argument("--recorte", type=int, default=384)
+    ap.add_argument("--batch", type=int, default=8); ap.add_argument("--recorte", type=int, default=320)
     ap.add_argument("--lr", type=float, default=1e-3); ap.add_argument("--lr-lora", type=float, default=2e-3)
     ap.add_argument("--workers", type=int, default=2); ap.add_argument("--log", type=int, default=100)
     ap.add_argument("--saida", default="pesos"); ap.add_argument("--retomar")
