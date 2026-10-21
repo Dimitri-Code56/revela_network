@@ -1,4 +1,4 @@
-# Renderizador de cena
+# Revela Network
 
 Um modelo que separa **o que a cena é** de **como ela é desenhada**.
 
