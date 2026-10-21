@@ -128,7 +128,12 @@ class IlluminantHead(nn.Module):
     def forward(self, g, tau=1.0, hard=False):
         out = self.mlp(g)
         logits, resid = out[:, :K_ILLUM], 0.1 * torch.tanh(out[:, K_ILLUM:])
-        w = F.gumbel_softmax(logits, tau, hard=True) if hard or not self.training else F.softmax(logits / tau, -1)
+        if not self.training:                               # uso: escolha determinística do código
+            w = F.one_hot(logits.argmax(-1), K_ILLUM).to(logits.dtype)
+        elif hard:
+            w = F.gumbel_softmax(logits, tau, hard=True)
+        else:
+            w = F.softmax(logits / tau, -1)
         emb = w @ self.codebook                             # (B, 32)
         chroma = w @ self.code_chroma + resid               # (B, 2)
         return {"logits": logits, "code": emb, "chroma": chroma}
